@@ -5,15 +5,16 @@ import SimpleSpaceBackground from '../components/SimpleSpaceBackground';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Code, ArrowRight } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Index: React.FC = () => {
   return (
-    <>
+    <div className="min-h-screen flex flex-col relative overflow-y-auto">
       <SimpleSpaceBackground />
       <Navbar />
       
-      <main className="pt-20 min-h-screen">
-        <section className="relative min-h-[80vh] flex items-center justify-center px-4">
+      <main className="flex-grow pt-16">
+        <section className="min-h-screen flex items-center justify-center px-4">
           <div className="max-w-7xl w-full mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="md:w-1/2 text-center md:text-left">
               <h1 className="text-4xl md:text-6xl font-bold mb-6">
@@ -52,7 +53,7 @@ const Index: React.FC = () => {
           </div>
         </section>
         
-        <section className="py-20 px-4">
+        <section id="background" className="py-20 px-4 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
               <span className="text-white">My </span>
@@ -75,7 +76,7 @@ const Index: React.FC = () => {
           </div>
         </section>
         
-        <section className="py-20 px-4 bg-[#0a0a30]/30">
+        <section id="learning-goals" className="py-20 px-4 bg-[#0a0a30]/30 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
               <span className="text-white">Learning </span>
@@ -100,7 +101,7 @@ const Index: React.FC = () => {
           </div>
         </section>
         
-        <section className="py-20 px-4">
+        <section id="contact-section" className="py-20 px-4 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-16">
               <span className="text-white">Get in </span>
@@ -119,7 +120,7 @@ const Index: React.FC = () => {
       </main>
       
       <Footer />
-    </>
+    </div>
   );
 };
 

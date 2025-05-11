@@ -92,6 +92,12 @@ export default {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' }
 				},
+				'float-slow': {
+					'0%, 100%': { transform: 'translateY(0) translateX(0) scale(1)' },
+					'25%': { transform: 'translateY(-15px) translateX(15px) scale(1.05)' },
+					'50%': { transform: 'translateY(-25px) translateX(0) scale(1.1)' },
+					'75%': { transform: 'translateY(-15px) translateX(-15px) scale(1.05)' }
+				},
 				'glow': {
 					'0%, 100%': { textShadow: '0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff' },
 					'50%': { textShadow: '0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff' }
@@ -99,6 +105,12 @@ export default {
 				'rotate-slow': {
 					'0%': { transform: 'rotate(0deg)' },
 					'100%': { transform: 'rotate(360deg)' }
+				},
+				'shooting-star': {
+					'0%': { transform: 'translateY(0) translateX(0) rotate(35deg)', opacity: '0' },
+					'5%': { opacity: '1' },
+					'70%': { opacity: '1' },
+					'100%': { transform: 'translateY(100vh) translateX(-100vw) rotate(35deg)', opacity: '0' }
 				}
 			},
 			animation: {
@@ -108,8 +120,10 @@ export default {
 				'twinkle-delay': 'twinkle 3s ease-in-out 1s infinite',
 				'twinkle-delay-2': 'twinkle 3s ease-in-out 2s infinite',
 				'float': 'float 6s ease-in-out infinite',
+				'float-slow': 'float-slow 15s ease-in-out infinite',
 				'glow': 'glow 3s ease-in-out infinite',
-				'rotate-slow': 'rotate-slow 20s linear infinite'
+				'rotate-slow': 'rotate-slow 20s linear infinite',
+				'shooting-star': 'shootingStar 8s ease-in-out infinite'
 			},
 			fontFamily: {
 				'fira-code': ['"Fira Code"', 'monospace'],
