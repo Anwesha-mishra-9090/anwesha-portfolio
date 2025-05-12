@@ -1,4 +1,3 @@
-
 import React from 'react';
 import EnhancedSpaceBackground from '../components/EnhancedSpaceBackground';
 import Navbar from '../components/Navbar';
@@ -6,10 +5,8 @@ import Footer from '../components/Footer';
 import { Code, ArrowRight } from 'lucide-react';
 import { projectsData } from '../data/projects';
 import SectionHeading from '../components/SectionHeading';
-
 const SinglePage: React.FC = () => {
-  return (
-    <div className="min-h-screen flex flex-col relative overflow-x-hidden">
+  return <div className="min-h-screen flex flex-col relative overflow-x-hidden">
       <EnhancedSpaceBackground />
       <Navbar />
       
@@ -40,11 +37,7 @@ const SinglePage: React.FC = () => {
             <div className="md:w-1/2 flex justify-center">
               <div className="relative">
                 <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-neon-blue shadow-[0_0_20px_rgba(0,255,255,0.7)]">
-                  <img
-                    src="/lovable-uploads/e501e10b-d3d4-4937-8f6a-4a618561826e.png"
-                    alt="Anwesha Mishra"
-                    className="w-full h-full object-cover"
-                  />
+                  <img src="/lovable-uploads/e501e10b-d3d4-4937-8f6a-4a618561826e.png" alt="Anwesha Mishra" className="w-full h-full object-cover" />
                 </div>
                 <div className="absolute -bottom-4 -right-4 bg-[#0a0a20] p-3 rounded-full border-2 border-neon-pink shadow-[0_0_10px_rgba(255,0,255,0.7)]">
                   <Code size={32} className="text-neon-pink" />
@@ -63,9 +56,7 @@ const SinglePage: React.FC = () => {
               <p className="text-lg leading-relaxed">
                 Hi 👋, I'm Anwesha Mishra, an aspiring Backend Developer and Software Developer with a focus on Python, data engineering, and backend technologies. I'm passionate about coding, learning new technologies, and solving complex problems.
               </p>
-              <p className="text-lg leading-relaxed mt-4">
-                I'm currently focusing on deepening my understanding of backend development, machine learning, and contributing to open-source projects. I'm open to collaboration on data engineering and backend solutions.
-              </p>
+              <p className="text-lg leading-relaxed mt-4">I'm currently focusing on deepening my understanding of backend development, machine learning, and contributing to open-source projects. I'm open to collaboration on data engineering and backend solutions. If you want to contact me through Gmail you can click on this  "https://anwesha-portfolio.lovable.app/contact "  to message me and i will reply your every message . Thank you !</p>
               
               <div className="mt-8">
                 <h3 className="text-2xl font-bold text-neon-blue mb-4">My Expertise</h3>
@@ -161,14 +152,7 @@ const SinglePage: React.FC = () => {
             
             <div className="overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projectsData.map((project, index) => (
-                  <ProjectCard
-                    key={index}
-                    title={project.title}
-                    description={project.description}
-                    day={project.day}
-                  />
-                ))}
+                {projectsData.map((project, index) => <ProjectCard key={index} title={project.title} description={project.description} day={project.day} />)}
               </div>
             </div>
           </div>
@@ -239,30 +223,39 @@ const SinglePage: React.FC = () => {
       </main>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
-const SkillBar: React.FC<{name: string; percentage: number; color: string}> = ({ name, percentage, color }) => {
-  return (
-    <div>
+const SkillBar: React.FC<{
+  name: string;
+  percentage: number;
+  color: string;
+}> = ({
+  name,
+  percentage,
+  color
+}) => {
+  return <div>
       <div className="flex justify-between mb-1">
         <span>{name}</span>
         <span>{percentage}%</span>
       </div>
       <div className="w-full bg-gray-700 rounded-full h-2.5">
-        <div 
-          className={`h-2.5 rounded-full ${color === 'neon-blue' ? 'bg-neon-blue' : color === 'neon-pink' ? 'bg-neon-pink' : 'bg-neon-purple'}`} 
-          style={{ width: `${percentage}%` }}
-        ></div>
+        <div className={`h-2.5 rounded-full ${color === 'neon-blue' ? 'bg-neon-blue' : color === 'neon-pink' ? 'bg-neon-pink' : 'bg-neon-purple'}`} style={{
+        width: `${percentage}%`
+      }}></div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
-const ProjectCard: React.FC<{title: string; description: string; day: string}> = ({ title, description, day }) => {
-  return (
-    <div className="galaxy-card hover:border-neon-blue transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,255,255,0.3)]">
+const ProjectCard: React.FC<{
+  title: string;
+  description: string;
+  day: string;
+}> = ({
+  title,
+  description,
+  day
+}) => {
+  return <div className="galaxy-card hover:border-neon-blue transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,255,255,0.3)]">
       <div className="flex justify-between items-start mb-3">
         <h3 className="text-xl font-bold text-white">{title}</h3>
         <span className="text-sm text-neon-blue">{day}</span>
@@ -271,8 +264,6 @@ const ProjectCard: React.FC<{title: string; description: string; day: string}> =
       <a href="#" className="text-neon-pink hover:text-neon-blue transition-colors duration-300 text-sm flex items-center gap-1">
         View Project <ArrowRight size={14} />
       </a>
-    </div>
-  );
+    </div>;
 };
-
 export default SinglePage;
