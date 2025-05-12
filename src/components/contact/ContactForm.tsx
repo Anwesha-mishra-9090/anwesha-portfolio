@@ -13,9 +13,10 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Send } from 'lucide-react';
 import { contactFormSchema, type ContactFormValues } from '@/models/contactForm';
 
-const ContactForm: React.FC = () => {
+export const ContactForm: React.FC = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -25,6 +26,7 @@ const ContactForm: React.FC = () => {
     defaultValues: {
       name: '',
       email: '',
+      subject: '',
       message: '',
     },
   });
@@ -37,6 +39,7 @@ const ContactForm: React.FC = () => {
       const templateParams = {
         from_name: data.name,
         from_email: data.email,
+        subject: data.subject,
         message: data.message
       };
       
@@ -76,37 +79,59 @@ const ContactForm: React.FC = () => {
       
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-2">
-            <label htmlFor="name" className="text-white text-lg">Name</label>
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input 
-                      placeholder="Your name" 
-                      className="bg-[#161926] border-[#2E3350] text-white h-12 text-base" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label htmlFor="name" className="text-white text-lg">Name</label>
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input 
+                        placeholder="Your name" 
+                        className="bg-[#161926] border-[#2E3350] text-white h-12 text-base" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-white text-lg">Email</label>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input 
+                        placeholder="your.email@example.com" 
+                        type="email" 
+                        className="bg-[#161926] border-[#2E3350] text-white h-12 text-base" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
           
           <div className="space-y-2">
-            <label htmlFor="email" className="text-white text-lg">Email</label>
+            <label htmlFor="subject" className="text-white text-lg">Subject</label>
             <FormField
               control={form.control}
-              name="email"
+              name="subject"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input 
-                      placeholder="your.email@example.com" 
-                      type="email" 
+                      placeholder="Message subject" 
                       className="bg-[#161926] border-[#2E3350] text-white h-12 text-base" 
                       {...field} 
                     />
@@ -140,9 +165,10 @@ const ContactForm: React.FC = () => {
           
           <button
             type="submit"
-            className="w-full h-14 text-white font-medium text-lg rounded-md bg-gradient-to-r from-[#8B5CF6] to-[#22D3EE] hover:opacity-90 transition-opacity"
+            className="w-full h-14 text-white font-medium text-lg rounded-md bg-gradient-to-r from-[#8B5CF6] to-[#22D3EE] hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
             disabled={isSubmitting}
           >
+            <Send className="h-5 w-5" />
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>
         </form>
