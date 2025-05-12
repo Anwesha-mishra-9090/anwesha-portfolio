@@ -56,7 +56,13 @@ const SinglePage: React.FC = () => {
               <p className="text-lg leading-relaxed">
                 Hi 👋, I'm Anwesha Mishra, an aspiring Backend Developer and Software Developer with a focus on Python, data engineering, and backend technologies. I'm passionate about coding, learning new technologies, and solving complex problems.
               </p>
-              <p className="text-lg leading-relaxed mt-4">I'm currently focusing on deepening my understanding of backend development, machine learning, and contributing to open-source projects. I'm open to collaboration on data engineering and backend solutions. If you want to contact me through message you can click on this  "https://anwesha-portfolio.lovable.app/contact "  to message me and  it will pop up a new window for you . In that you can add your message and send me , i will reply to  your every message . Thank you !</p>
+              <p className="text-lg leading-relaxed mt-4">I'm currently focusing on deepening my understanding of backend development, machine learning, and contributing to open-source projects. I'm open to collaboration on data engineering and backend solutions. 
+
+----------------------------------------------------------------------------------------------------------------------------------------
+💌 Want to get in touch with me?
+Just click here 👉 https://anwesha-portfolio.lovable.app/contact  — a new window will pop up where you can easily type your message and send it my way! ✨
+I'll make sure to read and reply to every message you send.
+Thank you for reaching out! 🙏😊</p>
               
               <div className="mt-8">
                 <h3 className="text-2xl font-bold text-neon-blue mb-4">My Expertise</h3>
