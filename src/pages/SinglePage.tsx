@@ -93,10 +93,8 @@ const SinglePage: React.FC = () => {
                 </div>
                 
                 <div className="border-l-4 border-neon-purple pl-6 py-2">
-                  <h3 className="text-2xl font-bold text-white">N.C Autonomous college , Jajpur town , Odisha
-
-
-Bachelor of Computer Applications (BCA)</h3>
+                  <h3 className="text-2xl font-bold text-white">N.C Autonomous college , Jajpur town ,Odisha ||||||||||||||| 
+  - Bachelor of Computer Applications (BCA)</h3>
                   <p className="text-neon-purple">(2023 - 2026) | CGPA: 9.+</p>
                   <p className="mt-2">Pursuing Bachelor's degree in Computer Applications, focusing on software development, web technologies, database management, and data structures. Maintaining an excellent academic record with a CGPA above 9.0 while working on multiple personal projects and building a strong portfolio.</p>
                 </div>
