@@ -18,8 +18,8 @@ const Contact: React.FC = () => {
           <SectionHeading text="Get in" accentText="Touch" />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <ContactInfo />
             <ContactForm />
+            <ContactInfo />
           </div>
         </div>
       </main>

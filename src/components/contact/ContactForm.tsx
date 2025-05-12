@@ -4,7 +4,6 @@ import { Send } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import emailjs from 'emailjs-com';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { 
   Form, 
@@ -18,21 +17,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-
-// Define the form schema with zod
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
-  }),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+import { contactFormSchema, type ContactFormValues } from '@/models/contactForm';
 
 const ContactForm: React.FC = () => {
   const { toast } = useToast();
@@ -40,16 +25,17 @@ const ContactForm: React.FC = () => {
   const [formError, setFormError] = useState<string | null>(null);
   
   // Initialize react-hook-form
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactFormSchema),
     defaultValues: {
       name: '',
       email: '',
+      subject: '',
       message: ''
     },
   });
   
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     setFormError(null);
     
@@ -58,6 +44,7 @@ const ContactForm: React.FC = () => {
       const templateParams = {
         from_name: data.name,
         from_email: data.email,
+        subject: data.subject,
         message: data.message
       };
       
@@ -93,9 +80,7 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <div className="galaxy-card">
-      <h2 className="text-2xl font-bold mb-6 text-neon-pink">Send a Message</h2>
-      
+    <div className="bg-[#121212] rounded-lg p-6">
       {formError && (
         <Alert className="mb-6 border-red-500 bg-red-500/20">
           <AlertDescription>{formError}</AlertDescription>
@@ -103,36 +88,56 @@ const ContactForm: React.FC = () => {
       )}
       
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-white">Your Name</FormLabel>
-                <FormControl>
-                  <Input 
-                    placeholder="Enter your name" 
-                    className="p-3 bg-[#1a103d] border border-[#8c52ff]/30 rounded-md focus:ring-2 focus:ring-neon-pink focus:border-transparent text-white" 
-                    {...field} 
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">Name</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Your name" 
+                      className="bg-[#1e1e1e] border-[#333] text-white" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">Email</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Your email" 
+                      type="email" 
+                      className="bg-[#1e1e1e] border-[#333] text-white" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           
           <FormField
             control={form.control}
-            name="email"
+            name="subject"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-white">Your Email</FormLabel>
+                <FormLabel className="text-white">Subject</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="Enter your email" 
-                    type="email" 
-                    className="p-3 bg-[#1a103d] border border-[#8c52ff]/30 rounded-md focus:ring-2 focus:ring-neon-pink focus:border-transparent text-white" 
+                    placeholder="Message subject" 
+                    className="bg-[#1e1e1e] border-[#333] text-white" 
                     {...field} 
                   />
                 </FormControl>
@@ -149,9 +154,9 @@ const ContactForm: React.FC = () => {
                 <FormLabel className="text-white">Message</FormLabel>
                 <FormControl>
                   <Textarea 
-                    placeholder="Type your message here..." 
+                    placeholder="Your message" 
                     rows={5} 
-                    className="p-3 bg-[#1a103d] border border-[#8c52ff]/30 rounded-md focus:ring-2 focus:ring-neon-pink focus:border-transparent text-white resize-none" 
+                    className="bg-[#1e1e1e] border-[#333] text-white resize-none" 
                     {...field}
                   />
                 </FormControl>
@@ -162,10 +167,10 @@ const ContactForm: React.FC = () => {
           
           <Button
             type="submit"
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-3 rounded-md flex items-center justify-center gap-2"
+            className="w-full bg-[#00e1ff] hover:bg-[#00b8cc] text-black font-medium py-3 rounded-md flex items-center justify-center gap-2"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Sending...' : 'Send Message'} <Send size={16} />
+            {isSubmitting ? 'Sending...' : 'Send Message'}
           </Button>
         </form>
       </Form>

@@ -1,59 +1,89 @@
 
 import React from 'react';
-import { Mail, Phone, Github, Linkedin } from 'lucide-react';
+import { Mail, Github, Linkedin } from 'lucide-react';
 
 const ContactInfo: React.FC = () => {
   return (
-    <div className="galaxy-card">
-      <h2 className="text-2xl font-bold mb-6 text-neon-blue">Contact Information</h2>
+    <div className="space-y-8">
+      <div className="bg-[#121212] rounded-lg p-6">
+        <h2 className="text-2xl font-bold mb-6 text-white">Contact Information</h2>
+        
+        <div className="space-y-4">
+          <div className="flex items-start gap-4">
+            <Mail className="w-6 h-6 text-[#00e1ff] mt-1" />
+            <div>
+              <h3 className="text-lg font-medium text-white">Email</h3>
+              <a href="mailto:mishra.anwesha143@gmail.com" className="text-gray-300 hover:text-[#00e1ff] transition-colors">
+                mishra.anwesha143@gmail.com
+              </a>
+            </div>
+          </div>
+          
+          <div className="flex items-start gap-4">
+            <Github className="w-6 h-6 text-[#ff00ff] mt-1" />
+            <div>
+              <h3 className="text-lg font-medium text-white">GitHub</h3>
+              <a href="https://github.com/anweshamishragithub" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#ff00ff] transition-colors">
+                Anwesha-mishra-9090
+              </a>
+            </div>
+          </div>
+          
+          <div className="flex items-start gap-4">
+            <Linkedin className="w-6 h-6 text-[#ff00ff] mt-1" />
+            <div>
+              <h3 className="text-lg font-medium text-white">LinkedIn</h3>
+              <a href="https://linkedin.com/in/anweshamishralinkedin" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#ff00ff] transition-colors">
+                Anwesha Mishra
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
       
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a103d] border border-neon-blue">
-            <Mail className="w-5 h-5 text-neon-blue" />
-          </div>
-          <div>
-            <h3 className="text-lg font-medium">Email</h3>
-            <a href="mailto:mishra.anwesha143@gmail.com" className="text-gray-300 hover:text-neon-blue transition-colors">
-              mishra.anwesha143@gmail.com
-            </a>
-          </div>
-        </div>
+      <div className="bg-[#121212] rounded-lg p-6">
+        <h2 className="text-2xl font-bold mb-6 text-white">Find Me On</h2>
         
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a103d] border border-neon-pink">
-            <Phone className="w-5 h-5 text-neon-pink" />
-          </div>
-          <div>
-            <h3 className="text-lg font-medium">Phone</h3>
-            <a href="tel:+919827623522" className="text-gray-300 hover:text-neon-pink transition-colors">
-              +91 98276 23522
-            </a>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a103d] border border-neon-purple">
-            <Github className="w-5 h-5 text-neon-purple" />
-          </div>
-          <div>
-            <h3 className="text-lg font-medium">GitHub</h3>
-            <a href="https://github.com/anweshamishragithub" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-neon-purple transition-colors">
-              @anweshamishragithub
-            </a>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a103d] border border-neon-blue">
-            <Linkedin className="w-5 h-5 text-neon-blue" />
-          </div>
-          <div>
-            <h3 className="text-lg font-medium">LinkedIn</h3>
-            <a href="https://linkedin.com/in/anweshamishralinkedin" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-neon-blue transition-colors">
-              Anwesha Mishra
-            </a>
-          </div>
+        <div className="grid grid-cols-2 gap-3">
+          <a 
+            href="https://leetcode.com/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-[#1e1e1e] p-3 rounded-md hover:bg-[#252525] transition-colors"
+          >
+            <span className="text-[#f89f1b] font-bold">LC</span>
+            <span className="text-gray-300">LeetCode</span>
+          </a>
+          
+          <a 
+            href="https://www.hackerrank.com/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-[#1e1e1e] p-3 rounded-md hover:bg-[#252525] transition-colors"
+          >
+            <span className="text-[#00e868] font-bold">HR</span>
+            <span className="text-gray-300">HackerRank</span>
+          </a>
+          
+          <a 
+            href="https://stackoverflow.com/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-[#1e1e1e] p-3 rounded-md hover:bg-[#252525] transition-colors"
+          >
+            <span className="text-[#f48024] font-bold">SO</span>
+            <span className="text-gray-300">Stack Overflow</span>
+          </a>
+          
+          <a 
+            href="https://www.geeksforgeeks.org/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-[#1e1e1e] p-3 rounded-md hover:bg-[#252525] transition-colors"
+          >
+            <span className="text-[#2f8d46] font-bold">GFG</span>
+            <span className="text-gray-300">GeeksforGeeks</span>
+          </a>
         </div>
       </div>
     </div>
