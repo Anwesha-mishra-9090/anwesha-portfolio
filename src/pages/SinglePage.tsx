@@ -232,17 +232,10 @@ Thank you for reaching out! 🙏😊</p>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
               Have a project in mind or want to collaborate? Feel free to reach out and I'll get back to you!
             </p>
-            
-            <a 
-              href="/?contact" 
-              className="neon-button-purple inline-flex items-center gap-2"
-            >
-              Contact Me <ArrowRight size={16} />
-            </a>
           </div>
         </section>
         
-        {/* Message Section - Only shows when URL has "contact" parameter */}
+        {/* Message Section - Always visible */}
         <ContactSection />
       </main>
       
