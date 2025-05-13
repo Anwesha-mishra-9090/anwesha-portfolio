@@ -8,6 +8,7 @@ import { certificatesData } from '../data/certificates';
 import SectionHeading from '../components/SectionHeading';
 import CertificateCard from '../components/certificates/CertificateCard';
 import ContactSection from '../components/contact/ContactSection';
+
 const SinglePage: React.FC = () => {
   return <div className="min-h-screen flex flex-col relative overflow-x-hidden">
       <EnhancedSpaceBackground />
@@ -208,13 +209,19 @@ const SinglePage: React.FC = () => {
         </section>
         
         {/* Get in Touch Section */}
-        <section id="contact" className="py-20 px-4 min-h-screen flex items-center">
+        <section id="contact" className="py-20 px-4 bg-gradient-to-b from-transparent to-[#0a0a30]/50">
           <div className="max-w-7xl mx-auto text-center">
             <SectionHeading text="Get in" accentText="Touch" />
             
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Have a project in mind or want to collaborate? Feel free to reach out and I'll get back to you!
+            <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+              Have a project in mind or want to collaborate? Feel free to reach out through any of the platforms below or send me a direct message!
             </p>
+            
+            <div className="flex justify-center">
+              <a href="#message-me" className="neon-button-pink flex items-center justify-center gap-2 px-8 py-3 text-lg">
+                Send Message <ArrowRight size={18} />
+              </a>
+            </div>
           </div>
         </section>
         
@@ -225,6 +232,7 @@ const SinglePage: React.FC = () => {
       <Footer />
     </div>;
 };
+
 const SkillBar: React.FC<{
   name: string;
   percentage: number;
@@ -246,6 +254,7 @@ const SkillBar: React.FC<{
       </div>
     </div>;
 };
+
 const ProjectCard: React.FC<{
   title: string;
   description: string;
@@ -266,4 +275,5 @@ const ProjectCard: React.FC<{
       </a>
     </div>;
 };
+
 export default SinglePage;

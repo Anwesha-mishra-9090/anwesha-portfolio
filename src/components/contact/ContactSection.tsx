@@ -2,6 +2,7 @@
 import React from 'react';
 import ContactForm from './ContactForm';
 import SectionHeading from '../SectionHeading';
+import ContactInfo from './ContactInfo';
 
 const ContactSection: React.FC = () => {
   return (
@@ -9,7 +10,8 @@ const ContactSection: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <SectionHeading text="Send Me a" accentText="Message" />
         
-        <div className="max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+          <ContactInfo />
           <ContactForm />
         </div>
       </div>
