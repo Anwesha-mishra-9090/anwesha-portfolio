@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useRef } from 'react';
+import * as React from 'react';
 
 interface Star {
   x: number;
@@ -41,14 +40,14 @@ interface Nebula {
 }
 
 const EnhancedSpaceBackground: React.FC = () => {
-  const [stars, setStars] = useState<Star[]>([]);
-  const [planets, setPlanets] = useState<Planet[]>([]);
-  const [nebulae, setNebulae] = useState<Nebula[]>([]);
-  const backgroundRef = useRef<HTMLDivElement>(null);
-  const mousePosition = useRef({ x: 0, y: 0 });
+  const [stars, setStars] = React.useState<Star[]>([]);
+  const [planets, setPlanets] = React.useState<Planet[]>([]);
+  const [nebulae, setNebulae] = React.useState<Nebula[]>([]);
+  const backgroundRef = React.useRef<HTMLDivElement>(null);
+  const mousePosition = React.useRef({ x: 0, y: 0 });
   
   // Generate planets
-  useEffect(() => {
+  React.useEffect(() => {
     // Generate random planets
     const generatePlanets = () => {
       const numberOfPlanets = 4;
@@ -111,7 +110,7 @@ const EnhancedSpaceBackground: React.FC = () => {
   }, []);
   
   // Generate stars and nebulae
-  useEffect(() => {
+  React.useEffect(() => {
     // Generate random stars with varying depths
     const generateStars = () => {
       const numberOfStars = Math.floor(window.innerWidth * window.innerHeight / 800);
