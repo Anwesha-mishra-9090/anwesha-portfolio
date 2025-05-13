@@ -8,10 +8,8 @@ import { certificatesData } from '../data/certificates';
 import SectionHeading from '../components/SectionHeading';
 import CertificateCard from '../components/certificates/CertificateCard';
 import ContactSection from '../components/contact/ContactSection';
-
 const SinglePage: React.FC = () => {
-  return (
-    <div className="min-h-screen flex flex-col relative overflow-x-hidden">
+  return <div className="min-h-screen flex flex-col relative overflow-x-hidden">
       <EnhancedSpaceBackground />
       <Navbar />
       
@@ -61,13 +59,7 @@ const SinglePage: React.FC = () => {
               <p className="text-lg leading-relaxed">
                 Hi 👋, I'm Anwesha Mishra, an aspiring Backend Developer and Software Developer with a focus on Python, data engineering, and backend technologies. I'm passionate about coding, learning new technologies, and solving complex problems.
               </p>
-              <p className="text-lg leading-relaxed mt-4">I'm currently focusing on deepening my understanding of backend development, machine learning, and contributing to open-source projects. I'm open to collaboration on data engineering and backend solutions. 
-
-----------------------------------------------------------------------------------------------------------------------------------------
-💌 Want to get in touch with me?
-Just click here 👉 https://anwesha-portfolio.lovable.app/contact  — a new window will pop up where you can easily type your message and send it my way! ✨
-I'll make sure to read and reply to every message you send.
-Thank you for reaching out! 🙏😊</p>
+              <p className="text-lg leading-relaxed mt-4">I'm currently focusing on deepening my understanding of backend development, machine learning, and contributing to open-source projects. I'm open to collaboration on data engineering and backend solutions.  💌 Want to get in touch with me? Just click 👉 contact me —  where you can easily type your message and send it my way! ✨ I'll make sure to read and reply to every message you send. Thank you for reaching out! 🙏😊</p>
               
               <div className="mt-8">
                 <h3 className="text-2xl font-bold text-neon-blue mb-4">My Expertise</h3>
@@ -210,16 +202,7 @@ Thank you for reaching out! 🙏😊</p>
             <SectionHeading text="My" accentText="Certificates" />
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {certificatesData.map((certificate) => (
-                <CertificateCard
-                  key={certificate.id}
-                  image={certificate.image}
-                  title={certificate.title}
-                  issuer={certificate.issuer}
-                  date={certificate.date}
-                  altText={certificate.altText}
-                />
-              ))}
+              {certificatesData.map(certificate => <CertificateCard key={certificate.id} image={certificate.image} title={certificate.title} issuer={certificate.issuer} date={certificate.date} altText={certificate.altText} />)}
             </div>
           </div>
         </section>
@@ -240,10 +223,8 @@ Thank you for reaching out! 🙏😊</p>
       </main>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 const SkillBar: React.FC<{
   name: string;
   percentage: number;
@@ -265,7 +246,6 @@ const SkillBar: React.FC<{
       </div>
     </div>;
 };
-
 const ProjectCard: React.FC<{
   title: string;
   description: string;
@@ -286,5 +266,4 @@ const ProjectCard: React.FC<{
       </a>
     </div>;
 };
-
 export default SinglePage;
