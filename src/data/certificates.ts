@@ -39,5 +39,37 @@ export const certificatesData = [
     date: "April 14, 2025",
     image: "/lovable-uploads/bda50c7b-1ce7-42ca-8974-c078cf5642d6.png",
     altText: "Udemy SQL Bootcamp Certificate"
+  },
+  {
+    id: 6,
+    title: "Introduction to Generative AI",
+    issuer: "Google Cloud",
+    date: "April 23, 2025",
+    image: "/lovable-uploads/08d66688-15d2-4f27-83c4-8fd7c49db2c4.png",
+    altText: "Google Cloud Introduction to Generative AI Certificate"
+  },
+  {
+    id: 7,
+    title: "Introduction to Large Language Models",
+    issuer: "Google Cloud",
+    date: "April 23, 2025",
+    image: "/lovable-uploads/3de48d31-4ef3-44e8-abf4-8cb7581129d1.png",
+    altText: "Google Cloud Introduction to Large Language Models Certificate"
+  },
+  {
+    id: 8,
+    title: "Introduction to Responsible AI",
+    issuer: "Google Cloud",
+    date: "April 23, 2025",
+    image: "/lovable-uploads/fd37e8a7-96bf-4070-aecb-edbb42d970d9.png",
+    altText: "Google Cloud Introduction to Responsible AI Certificate"
+  },
+  {
+    id: 9,
+    title: "Responsible AI: Applying AI Principles with Google Cloud",
+    issuer: "Google Cloud",
+    date: "April 23, 2025",
+    image: "/lovable-uploads/bce6946f-59f7-41f4-8f4c-66aa444d745f.png",
+    altText: "Google Cloud Responsible AI Certificate"
   }
 ];
