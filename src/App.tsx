@@ -9,7 +9,14 @@ import SinglePage from "./pages/SinglePage";
 import ScrollToTop from "./components/ScrollToTop";
 
 // Create a client
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App: React.FC = () => {
   return (
