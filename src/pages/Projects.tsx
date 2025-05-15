@@ -1,15 +1,18 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SimpleSpaceBackground from '../components/SimpleSpaceBackground';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Search, Code, Link as LinkIcon, ArrowRight } from 'lucide-react';
+import { Search, Code, Link as LinkIcon, ArrowRight, Filter, Calendar, BarChart2, Star, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 // Project data containing all 100 projects
 const projects = [
-  { id: 1, name: "Band Name Generator", description: "A fun program that generates a band name based on city and pet names.", link: "#" },
-  { id: 2, name: "Tip Calculator", description: "A tool to calculate tips based on the total bill and percentage.", link: "#" },
-  { id: 3, name: "Treasure Map", description: "A game where users find a treasure based on coordinates.", link: "#" },
+  { id: 1, name: "Band Name Generator", description: "A fun program that generates a band name based on city and pet names.", link: "#", category: "beginner", difficulty: 1, stars: 3, dateCompleted: "2024-01-05" },
+  { id: 2, name: "Tip Calculator", description: "A tool to calculate tips based on the total bill and percentage.", link: "#", category: "tools", difficulty: 1, stars: 4, dateCompleted: "2024-01-10" },
+  { id: 3, name: "Treasure Map", description: "A game where users find a treasure based on coordinates.", link: "#", category: "games", difficulty: 2, stars: 4, dateCompleted: "2024-01-15" },
   { id: 4, name: "Rock, Paper, Scissors", description: "Classic Rock, Paper, Scissors game played against the computer.", link: "#" },
   { id: 5, name: "Password Generator", description: "Generates strong passwords with a mix of characters.", link: "#" },
   { id: 6, name: "Blackjack", description: "A card game where players try to get as close to 21 points as possible without going over.", link: "#" },
@@ -109,62 +112,112 @@ const projects = [
   { id: 100, name: "Markdown Editor", description: "A text editor that supports Markdown syntax for formatting text.", link: "#" }
 ];
 
+type SortOption = 'newest' | 'oldest' | 'nameAsc' | 'nameDesc' | 'difficulty' | 'stars';
+
 const Projects: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [category, setCategory] = useState('all');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [difficulty, setDifficulty] = useState<number | null>(null);
+  const [sortOption, setSortOption] = useState<SortOption>('newest');
+  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const filterRef = useRef<HTMLDivElement>(null);
   
-  // Filter projects based on search term and category
+  // Handle click outside filter panel
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+        setIsFilterOpen(false);
+      }
+    };
+    
+    if (isFilterOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isFilterOpen]);
+  
+  // Filter projects based on search term, category, and difficulty
   const filteredProjects = projects.filter(project => {
     const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           project.description.toLowerCase().includes(searchTerm.toLowerCase());
     
-    if (category === 'all') return matchesSearch;
+    const matchesCategory = category === 'all' || 
+                            (category === 'games' && project.category === 'games') || 
+                            (category === 'tools' && project.category === 'tools') ||
+                            (category === 'web' && project.category === 'web');
     
-    // Define additional categories here if needed
-    if (category === 'games') {
-      return matchesSearch && (
-        project.name.toLowerCase().includes('game') || 
-        project.description.toLowerCase().includes('game')
-      );
-    }
+    const matchesDifficulty = difficulty === null || project.difficulty === difficulty;
     
-    if (category === 'tools') {
-      return matchesSearch && (
-        project.name.toLowerCase().includes('tool') || 
-        project.name.toLowerCase().includes('app') || 
-        project.name.toLowerCase().includes('tracker') ||
-        project.name.toLowerCase().includes('calculator')
-      );
-    }
-    
-    if (category === 'web') {
-      return matchesSearch && (
-        project.name.toLowerCase().includes('web') || 
-        project.description.toLowerCase().includes('web') ||
-        project.name.toLowerCase().includes('app')
-      );
-    }
-    
-    return matchesSearch;
+    return matchesSearch && matchesCategory && matchesDifficulty;
   });
+  
+  // Sort projects
+  const sortedProjects = [...filteredProjects].sort((a, b) => {
+    switch (sortOption) {
+      case 'newest':
+        return new Date(b.dateCompleted).getTime() - new Date(a.dateCompleted).getTime();
+      case 'oldest':
+        return new Date(a.dateCompleted).getTime() - new Date(b.dateCompleted).getTime();
+      case 'nameAsc':
+        return a.name.localeCompare(b.name);
+      case 'nameDesc':
+        return b.name.localeCompare(a.name);
+      case 'difficulty':
+        return b.difficulty - a.difficulty;
+      case 'stars':
+        return b.stars - a.stars;
+      default:
+        return 0;
+    }
+  });
+  
+  const openProjectDialog = (project: typeof projects[0]) => {
+    setSelectedProject(project);
+    setIsDialogOpen(true);
+  };
+  
+  const renderStars = (count: number) => {
+    return Array(5).fill(0).map((_, i) => (
+      <Star 
+        key={i} 
+        className={`w-4 h-4 ${i < count ? 'text-neon-pink fill-neon-pink' : 'text-gray-400'}`} 
+      />
+    ));
+  };
   
   return (
     <>
       <SimpleSpaceBackground />
       <Navbar />
       
-      <main className="pt-24 min-h-screen px-4">
+      <main className="pt-24 pb-20 min-h-screen px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
-            <span className="text-white">My </span>
-            <span className="text-neon-blue">Projects</span>
-          </h1>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
+              <span className="text-white">My </span>
+              <span className="text-neon-blue">Projects</span>
+            </h1>
+            
+            <p className="text-xl text-center text-gray-300 mb-12">
+              Explore my collection of 100 coding projects
+            </p>
+          </motion.div>
           
-          <p className="text-xl text-center text-gray-300 mb-12">
-            Explore my collection of 100 coding projects
-          </p>
-          
-          <div className="galaxy-card mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="galaxy-card mb-12"
+          >
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="w-full md:w-2/3 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
@@ -175,6 +228,14 @@ const Projects: React.FC = () => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-[#1a103d] border border-[#8c52ff]/30 rounded-md focus:outline-none focus:ring-2 focus:ring-neon-blue focus:border-transparent text-white"
                 />
+                {searchTerm && (
+                  <button 
+                    onClick={() => setSearchTerm('')}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                  >
+                    <X size={18} />
+                  </button>
+                )}
               </div>
               
               <div className="w-full md:w-1/3 flex gap-3">
@@ -196,58 +257,259 @@ const Projects: React.FC = () => {
                 >
                   Tools
                 </button>
+                <div className="relative">
+                  <button
+                    onClick={() => setIsFilterOpen(!isFilterOpen)}
+                    className={`h-full aspect-square flex items-center justify-center rounded-md transition-all ${isFilterOpen ? 'bg-neon-blue/20 border border-neon-blue' : 'bg-[#1a103d] border border-[#8c52ff]/30 hover:border-neon-blue'}`}
+                  >
+                    <Filter size={16} />
+                  </button>
+                  
+                  {/* Advanced Filter Panel */}
+                  <AnimatePresence>
+                    {isFilterOpen && (
+                      <motion.div
+                        ref={filterRef}
+                        initial={{ opacity: 0, scale: 0.9, y: -10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute right-0 top-full mt-2 p-4 w-64 galaxy-card z-10"
+                      >
+                        <h3 className="text-sm font-semibold mb-2 flex items-center">
+                          <Filter size={14} className="mr-2" />
+                          Advanced Filters
+                        </h3>
+                        
+                        <div className="mb-4">
+                          <p className="text-xs text-gray-400 mb-2">Difficulty Level:</p>
+                          <div className="flex flex-wrap gap-2">
+                            {[null, 1, 2, 3, 4, 5].map((level) => (
+                              <button
+                                key={level === null ? 'all' : level}
+                                onClick={() => setDifficulty(level)}
+                                className={`text-xs py-1 px-2 rounded-md transition-all ${
+                                  difficulty === level 
+                                    ? 'bg-neon-blue/20 border border-neon-blue' 
+                                    : 'bg-[#1a103d] border border-[#8c52ff]/30'
+                                }`}
+                              >
+                                {level === null ? 'All' : `Level ${level}`}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <p className="text-xs text-gray-400 mb-2">Sort By:</p>
+                          <select
+                            value={sortOption}
+                            onChange={(e) => setSortOption(e.target.value as SortOption)}
+                            className="w-full text-sm py-2 px-3 bg-[#1a103d] border border-[#8c52ff]/30 rounded-md focus:outline-none focus:ring-1 focus:ring-neon-blue"
+                          >
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="nameAsc">Name (A-Z)</option>
+                            <option value="nameDesc">Name (Z-A)</option>
+                            <option value="difficulty">Difficulty (Highest)</option>
+                            <option value="stars">Rating (Highest)</option>
+                          </select>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
             </div>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.length > 0 ? (
-              filteredProjects.map(project => (
-                <div key={project.id} className="galaxy-card group hover:border-neon-blue transition-all duration-300">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a103d] border border-neon-blue group-hover:scale-110 transition-transform">
-                      <Code className="w-5 h-5 text-neon-blue" />
-                    </div>
-                    <span className="text-sm text-gray-400">Project #{project.id}</span>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-neon-blue transition-colors">
-                    {project.name}
-                  </h3>
-                  
-                  <p className="text-gray-300 mb-6 h-16 overflow-hidden">
-                    {project.description}
-                  </p>
-                  
-                  <div className="flex justify-between items-center">
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-neon-blue hover:underline"
-                    >
-                      <LinkIcon size={16} />
-                      View Project
-                    </a>
-                    
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-8 h-8 flex items-center justify-center rounded-full bg-[#1a103d] border border-neon-blue opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <ArrowRight size={16} className="text-neon-blue" />
-                    </a>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="col-span-3 text-center py-12">
-                <h3 className="text-2xl font-bold text-gray-300 mb-4">No projects found</h3>
-                <p className="text-gray-400">Try adjusting your search criteria</p>
+            
+            <div className="flex justify-between items-center mt-4">
+              <div className="text-sm text-gray-400">
+                Found <span className="text-white font-semibold">{sortedProjects.length}</span> projects
+                {searchTerm && <span> matching "<span className="text-neon-blue">{searchTerm}</span>"</span>}
               </div>
-            )}
-          </div>
+              
+              <div className="text-sm text-gray-400 flex items-center">
+                <span className="mr-2">View:</span>
+                <Tabs defaultValue="grid" className="h-8">
+                  <TabsList className="h-8 p-1 bg-[#1a103d]/80">
+                    <TabsTrigger value="grid" className="h-6 px-2">Grid</TabsTrigger>
+                    <TabsTrigger value="list" className="h-6 px-2">List</TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </div>
+            </div>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {sortedProjects.length > 0 ? (
+                sortedProjects.map((project, index) => (
+                  <motion.div 
+                    key={project.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                  >
+                    <div 
+                      className="galaxy-card group hover:border-neon-blue transition-all duration-300 cursor-pointer"
+                      onClick={() => openProjectDialog(project)}
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#1a103d] border border-neon-blue group-hover:scale-110 transition-transform">
+                          <Code className="w-5 h-5 text-neon-blue" />
+                        </div>
+                        <span className="text-sm text-gray-400">Project #{project.id}</span>
+                      </div>
+                      
+                      <h3 className="text-xl font-bold mb-3 group-hover:text-neon-blue transition-colors">
+                        {project.name}
+                      </h3>
+                      
+                      <p className="text-gray-300 mb-6 h-16 overflow-hidden">
+                        {project.description}
+                      </p>
+                      
+                      <div className="flex justify-between items-center mb-3">
+                        <div className="flex items-center">
+                          <Calendar size={16} className="text-gray-400 mr-2" />
+                          <span className="text-sm text-gray-300">{project.dateCompleted}</span>
+                        </div>
+                        <div className="flex">{renderStars(project.stars)}</div>
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <div className="inline-flex items-center gap-2 text-neon-blue">
+                          <LinkIcon size={16} />
+                          <span className="text-sm">View Project</span>
+                        </div>
+                        
+                        <div className="w-8 h-8 flex items-center justify-center rounded-full bg-[#1a103d] border border-neon-blue opacity-0 group-hover:opacity-100 transition-opacity">
+                          <ArrowRight size={16} className="text-neon-blue" />
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))
+              ) : (
+                <div className="col-span-3 text-center py-12">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <h3 className="text-2xl font-bold text-gray-300 mb-4">No projects found</h3>
+                    <p className="text-gray-400">Try adjusting your search criteria</p>
+                    <button 
+                      onClick={() => {
+                        setSearchTerm('');
+                        setCategory('all');
+                        setDifficulty(null);
+                        setSortOption('newest');
+                      }}
+                      className="mt-4 py-2 px-4 border border-neon-blue text-neon-blue rounded-md hover:bg-neon-blue/10 transition-colors"
+                    >
+                      Reset Filters
+                    </button>
+                  </motion.div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+          
+          {/* Project Details Dialog */}
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogContent className="max-w-3xl bg-[#0f0f2a] border-neon-blue/30">
+              {selectedProject && (
+                <>
+                  <DialogHeader>
+                    <DialogTitle className="text-2xl font-bold flex items-center gap-2">
+                      <Code className="text-neon-blue" />
+                      {selectedProject.name}
+                      <span className="text-sm font-normal text-gray-400 ml-2">
+                        Project #{selectedProject.id}
+                      </span>
+                    </DialogTitle>
+                  </DialogHeader>
+                  
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <AspectRatio ratio={16/9} className="bg-[#1a103d] rounded-md overflow-hidden mb-4">
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Code className="w-12 h-12 text-neon-blue/50" />
+                        </div>
+                      </AspectRatio>
+                      
+                      <div className="flex justify-between mb-4">
+                        <div className="flex items-center">
+                          <Calendar size={16} className="text-gray-400 mr-2" />
+                          <span className="text-sm text-gray-300">{selectedProject.dateCompleted}</span>
+                        </div>
+                        <div className="flex">{renderStars(selectedProject.stars)}</div>
+                      </div>
+                      
+                      <div className="mb-4">
+                        <h4 className="text-sm font-semibold mb-2">Project Stats</h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="bg-[#1a103d]/60 p-3 rounded-md">
+                            <p className="text-xs text-gray-400">Difficulty</p>
+                            <p className="text-sm font-medium">{Array(selectedProject.difficulty).fill('🔹').join('')}</p>
+                          </div>
+                          <div className="bg-[#1a103d]/60 p-3 rounded-md">
+                            <p className="text-xs text-gray-400">Category</p>
+                            <p className="text-sm font-medium capitalize">{selectedProject.category}</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <a 
+                        href={selectedProject.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="neon-button w-full flex items-center justify-center gap-2"
+                      >
+                        <LinkIcon size={16} />
+                        Visit Project
+                      </a>
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-medium mb-3">Project Description</h4>
+                      <p className="text-gray-300 mb-6">{selectedProject.description}</p>
+                      
+                      <h4 className="font-medium mb-3">Key Features</h4>
+                      <ul className="list-disc list-inside text-gray-300 mb-6">
+                        <li>Interactive user interface</li>
+                        <li>Data persistence</li>
+                        <li>Responsive design</li>
+                        <li>Error handling</li>
+                      </ul>
+                      
+                      <h4 className="font-medium mb-3">Technologies Used</h4>
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        <span className="px-2 py-1 text-xs bg-neon-blue/10 border border-neon-blue/30 rounded-md">JavaScript</span>
+                        <span className="px-2 py-1 text-xs bg-neon-pink/10 border border-neon-pink/30 rounded-md">HTML</span>
+                        <span className="px-2 py-1 text-xs bg-neon-purple/10 border border-neon-purple/30 rounded-md">CSS</span>
+                        <span className="px-2 py-1 text-xs bg-[#1a103d] border border-[#8c52ff]/30 rounded-md">React</span>
+                      </div>
+                      
+                      <div className="flex justify-end">
+                        <button 
+                          onClick={() => setIsDialogOpen(false)}
+                          className="px-4 py-2 text-gray-300 hover:text-white"
+                        >
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </DialogContent>
+          </Dialog>
         </div>
       </main>
       
