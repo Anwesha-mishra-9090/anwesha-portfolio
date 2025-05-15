@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SinglePage from "./pages/SinglePage";
+import Projects from "./pages/Projects";
 import ScrollToTop from "./components/ScrollToTop";
 
 // Create a client
@@ -28,6 +29,7 @@ const App: React.FC = () => {
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<SinglePage />} />
+            <Route path="/projects" element={<Projects />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
