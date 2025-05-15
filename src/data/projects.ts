@@ -1,4 +1,3 @@
-
 export const projectsData = {
   // Backend Python Projects
   backendProjects: {
@@ -132,12 +131,12 @@ export const projectsData = {
       skills: ["HTML/CSS/JavaScript", "DOM Manipulation", "LocalStorage", "Responsive Design", "CRUD Operations", "Backend Integration"]
     },
     {
-      name: "Angry Birds Clone",
-      description: "This 2D web-based game recreates the popular Angry Birds experience directly in the browser. Players use a slingshot mechanism to launch birds at structures sheltering enemy targets. The game features realistic physics with gravity affecting all objects, accurate collision detection between birds and structures, and satisfying structural collapse animations. The intuitive controls allow players to aim by dragging the slingshot backward, with the launch velocity determined by how far they pull. Each level presents unique architectural challenges requiring strategic aiming and timing. The scoring system awards points based on destruction efficiency and remaining birds, with star ratings indicating performance. Players progress through increasingly difficult levels, with new bird types introducing special abilities like splitting into multiple projectiles or explosive impacts. Sound effects enhance the gameplay experience, with distinct sounds for launching, collisions, and structure collapses. The responsive design ensures the game plays well on both desktop and mobile browsers, with touch controls automatically enabled on touch-capable devices.",
-      link: "#",
-      date: "May 2025",
+      name: "ArcBot AI Chatbot",
+      description: "ArcBot is an advanced AI chatbot inspired by Google Gemini and ChatGPT, designed to deliver intelligent, context-aware, multi-turn conversations. Built with Python and PostgreSQL, and powered by a large language model (LLM), ArcBot understands natural language, adapts its tone to the user, and provides clear, concise, and helpful responses. It features conversation memory, markdown formatting, code snippet support, and error fallback handling — making it suitable for real-world use cases like virtual assistance, customer support, or tutoring. The chatbot serves multiple domains including education, programming help, general Q&A, and product support, integrating seamlessly with modern frontend frameworks and structured for scalability and deployment. Key features include context-aware conversation, smart system prompt-based behavior, PostgreSQL integration for storing chat history, session memory using Redis, markdown & code formatting in answers, custom tone/personality settings, authentication-ready backend, and a modern React/Tailwind UI frontend.",
+      link: "https://arcbot-ai-assistant.vercel.app/",
+      date: "April 2025",
       image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1",
-      skills: ["JavaScript ES6", "HTML5 Canvas", "Matter.js Physics", "Event Handling", "Game Design", "Animation", "Responsive Web Design", "Version Control"]
+      skills: ["Python/FastAPI", "PostgreSQL", "React/TailwindCSS", "LLM Integration", "Prompt Engineering", "WebSocket", "JWT Authentication", "Redis Caching", "Docker", "Modular Architecture"]
     },
     {
       name: "Candy Crush",
