@@ -1,15 +1,26 @@
 
 import * as React from "react";
-import { toast as sonnerToast, Toaster as Sonner } from "sonner";
+import { toast as sonnerToast, type ToastT } from "sonner";
 
-import { cn } from "@/lib/utils";
+// Define a type for the toast function and related utilities
+type Toast = {
+  toast: (props: {
+    title?: string;
+    description?: string;
+    action?: React.ReactNode;
+    variant?: string;
+    [key: string]: any;
+  }) => string | number;
+  dismiss: (id?: string | number) => void;
+  error: (title: string, description?: string) => void;
+  success: (title: string, description?: string) => void;
+  toasts: any[]; // Required by the Toaster component, even if empty
+};
 
-type ToastProps = React.ComponentProps<typeof Sonner>;
-
-const Toaster = ({ className, ...props }: ToastProps) => {
+const Toaster = ({ className, ...props }: React.ComponentProps<typeof ToastT>) => {
   return (
-    <Sonner
-      className={cn(className)}
+    <ToastT
+      className={className}
       toastOptions={{
         classNames: {
           toast:
@@ -27,7 +38,7 @@ const Toaster = ({ className, ...props }: ToastProps) => {
   );
 };
 
-// Toast function with theme-consistent styling
+// Create the toast function with appropriate typing
 function toast({
   title,
   description,
@@ -43,17 +54,23 @@ function toast({
 }) {
   try {
     // Use the variant directly as a method on sonnerToast if it exists
-    if (typeof sonnerToast[variant] === 'function') {
-      return sonnerToast[variant]({
-        title,
+    if (variant === "error" && typeof sonnerToast.error === 'function') {
+      return sonnerToast.error(title || "", {
         description,
         action,
         ...props,
       });
-    } else {
-      // Fallback to default toast if variant doesn't exist
-      return sonnerToast({
-        title,
+    } 
+    else if (variant === "success" && typeof sonnerToast.success === 'function') {
+      return sonnerToast.success(title || "", {
+        description,
+        action,
+        ...props,
+      });
+    }
+    else {
+      // Default toast
+      return sonnerToast(title || "", {
         description,
         action,
         ...props,
@@ -62,17 +79,15 @@ function toast({
   } catch (error) {
     console.error("Toast error:", error);
     // Last resort fallback
-    return sonnerToast({
-      title,
-      description,
-      action,
+    return sonnerToast(title || "Notification", {
+      description: description || "Something happened",
       ...props,
     });
   }
 }
 
 // Define useToast hook
-const useToast = () => {
+const useToast = (): Toast => {
   return {
     toast,
     dismiss: sonnerToast.dismiss,
@@ -82,8 +97,7 @@ const useToast = () => {
     success: (title: string, description?: string) => {
       toast({ title, description, variant: "success" });
     },
-    // Empty array to satisfy the toaster component
-    toasts: [],
+    toasts: [], // Empty array to satisfy the toaster component
   };
 };
 
