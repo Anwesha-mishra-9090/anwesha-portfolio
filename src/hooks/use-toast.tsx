@@ -86,7 +86,7 @@ function toast({
   }
 }
 
-// Define and export the useToast hook
+// Define the useToast hook
 const useToast = (): Toast => {
   return {
     toast,
