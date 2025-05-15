@@ -1,7 +1,4 @@
 
-// This file implements the toast functionality following the shadcn/ui pattern
-// but placed in the hooks directory as per latest shadcn standards
-
 import * as React from "react";
 import { toast as sonnerToast, Toaster as Sonner } from "sonner";
 
@@ -30,38 +27,51 @@ const Toaster = ({ className, ...props }: ToastProps) => {
   );
 };
 
-// Toast function with theme-consistent styling for portfolio
+// Toast function with theme-consistent styling
 function toast({
   title,
   description,
   action,
+  variant = "default",
   ...props
 }: {
   title?: string;
   description?: string;
   action?: React.ReactNode;
+  variant?: string;
   [key: string]: any;
 }) {
-  return sonnerToast[props.variant || "default"]({
-    title,
-    description,
-    action,
-    ...props,
-  });
+  try {
+    return sonnerToast[variant]({
+      title,
+      description,
+      action,
+      ...props,
+    });
+  } catch (error) {
+    console.error("Toast error:", error);
+    // Fallback to default toast if variant doesn't exist
+    return sonnerToast.default({
+      title,
+      description,
+      action,
+      ...props,
+    });
+  }
 }
 
-// Define the useToast hook ONCE
+// Define useToast hook
 const useToast = () => {
   return {
     toast,
     dismiss: sonnerToast.dismiss,
     error: (title: string, description?: string) => {
-      toast({ title, description, variant: "destructive" });
+      toast({ title, description, variant: "error" });
     },
     success: (title: string, description?: string) => {
-      toast({ title, description });
+      toast({ title, description, variant: "success" });
     },
-    // Add a toasts property as an empty array to satisfy the toaster component
+    // Empty array to satisfy the toaster component
     toasts: [],
   };
 };
