@@ -1,8 +1,21 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import SimpleSpaceBackground from '../components/SimpleSpaceBackground';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Code, Database, Globe, Server, Layout, Terminal } from 'lucide-react';
+import SkillBar from '../components/skills/SkillBar';
+
+interface SkillCategory {
+  name: string;
+  icon: React.ReactNode;
+  skills: {
+    name: string;
+    level: number;
+    experience: string;
+  }[];
+}
 
 const Skills: React.FC = () => {
   const languages = [
@@ -39,7 +52,7 @@ const Skills: React.FC = () => {
   return (
     <>
       <SimpleSpaceBackground />
-      <Navbar />
+      <Navbar activeSection="skills" />
       
       <main className="pt-24 min-h-screen px-4">
         <div className="max-w-5xl mx-auto">

@@ -9,7 +9,7 @@ const About: React.FC = () => {
   return (
     <>
       <SimpleSpaceBackground />
-      <Navbar />
+      <Navbar activeSection="about" />
       
       <main className="pt-24 min-h-screen px-4">
         <div className="max-w-5xl mx-auto">

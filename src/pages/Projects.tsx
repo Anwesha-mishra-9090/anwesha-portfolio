@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import SimpleSpaceBackground from '../components/SimpleSpaceBackground';
 import Navbar from '../components/Navbar';
@@ -193,7 +194,7 @@ const Projects: React.FC = () => {
   return (
     <>
       <SimpleSpaceBackground />
-      <Navbar />
+      <Navbar activeSection="projects" />
       
       <main className="pt-24 pb-20 min-h-screen px-4">
         <div className="max-w-6xl mx-auto">

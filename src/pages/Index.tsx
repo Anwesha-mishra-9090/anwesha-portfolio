@@ -11,7 +11,7 @@ const Index: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col relative overflow-y-auto">
       <SimpleSpaceBackground />
-      <Navbar />
+      <Navbar activeSection="hero" />
       
       <main className="flex-grow pt-16">
         <section className="min-h-screen flex items-center justify-center px-4">
