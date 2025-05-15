@@ -50,10 +50,8 @@ function toast({
   });
 }
 
-export { Toaster, toast, useToast };
-
-// Re-export useToast from sonner
-export const useToast = () => {
+// Define the useToast hook ONCE
+const useToast = () => {
   return {
     toast,
     dismiss: sonnerToast.dismiss,
@@ -63,5 +61,9 @@ export const useToast = () => {
     success: (title: string, description?: string) => {
       toast({ title, description });
     },
+    // Add a toasts property as an empty array to satisfy the toaster component
+    toasts: [],
   };
 };
+
+export { Toaster, toast, useToast };
