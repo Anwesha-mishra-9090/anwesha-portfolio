@@ -42,16 +42,27 @@ function toast({
   [key: string]: any;
 }) {
   try {
-    return sonnerToast[variant]({
-      title,
-      description,
-      action,
-      ...props,
-    });
+    // Use the variant directly as a method on sonnerToast if it exists
+    if (typeof sonnerToast[variant] === 'function') {
+      return sonnerToast[variant]({
+        title,
+        description,
+        action,
+        ...props,
+      });
+    } else {
+      // Fallback to default toast if variant doesn't exist
+      return sonnerToast({
+        title,
+        description,
+        action,
+        ...props,
+      });
+    }
   } catch (error) {
     console.error("Toast error:", error);
-    // Fallback to default toast if variant doesn't exist
-    return sonnerToast.default({
+    // Last resort fallback
+    return sonnerToast({
       title,
       description,
       action,
