@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import { toast as sonnerToast, type ToastT } from "sonner";
+import { toast as sonnerToast, Toaster as SonnerToaster } from "sonner";
 
 // Define a type for the toast function and related utilities
 type Toast = {
@@ -17,9 +17,9 @@ type Toast = {
   toasts: any[]; // Required by the Toaster component, even if empty
 };
 
-const Toaster = ({ className, ...props }: React.ComponentProps<typeof ToastT>) => {
+const Toaster = ({ className, ...props }: React.ComponentProps<typeof SonnerToaster>) => {
   return (
-    <ToastT
+    <SonnerToaster
       className={className}
       toastOptions={{
         classNames: {
