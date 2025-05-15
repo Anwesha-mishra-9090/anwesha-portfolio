@@ -2,39 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  activeSection: string;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-  // Listen for scroll and update active section
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'about', 'education', 'skills', 'projects', 'contact'];
-      let currentSection = 'home';
-      
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            currentSection = section;
-            break;
-          }
-        }
-      }
-      
-      setActiveSection(currentSection);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#0a0a20]/80 backdrop-blur-md border-b border-[#8c52ff]/30">
@@ -54,7 +31,7 @@ const Navbar: React.FC = () => {
           {/* Desktop nav */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8">
-              <NavLink href="#home" isActive={activeSection === 'home'}>Home</NavLink>
+              <NavLink href="#home" isActive={activeSection === 'hero'}>Home</NavLink>
               <NavLink href="#about" isActive={activeSection === 'about'}>About</NavLink>
               <NavLink href="#education" isActive={activeSection === 'education'}>Education</NavLink>
               <NavLink href="#skills" isActive={activeSection === 'skills'}>Skills</NavLink>
