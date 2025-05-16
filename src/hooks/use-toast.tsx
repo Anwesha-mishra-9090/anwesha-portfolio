@@ -86,7 +86,6 @@ function toast({
   }
 }
 
-// Define the useToast hook
 const useToast = (): Toast => {
   return {
     toast,
