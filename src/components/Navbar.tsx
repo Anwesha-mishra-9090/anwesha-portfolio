@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface NavbarProps {
   activeSection: string;
@@ -18,14 +19,14 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <a href="#home" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <span className="text-xl font-bold neon-text-blue">
                 <span className="text-neon-pink">{'<'}</span>/
                 <span className="text-white">Anwesha</span>
                 <span className="text-neon-purple">Mishra</span>
                 <span className="text-neon-pink">{'>'}</span>
               </span>
-            </a>
+            </Link>
           </div>
           
           {/* Desktop nav */}
@@ -35,7 +36,10 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
               <NavLink href="#about" isActive={activeSection === 'about'}>About</NavLink>
               <NavLink href="#education" isActive={activeSection === 'education'}>Education</NavLink>
               <NavLink href="#skills" isActive={activeSection === 'skills'}>Skills</NavLink>
-              <NavLink href="#projects" isActive={activeSection === 'projects'}>Projects</NavLink>
+              <Link to="/projects" className={`text-gray-300 hover:text-neon-blue hover:scale-105 px-3 py-2 rounded-md text-sm font-medium transition-all relative group ${activeSection === 'projects' ? 'text-neon-blue' : ''}`}>
+                Projects
+                <span className={`absolute bottom-0 left-0 h-[2px] bg-neon-blue transition-all duration-300 ${activeSection === 'projects' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+              </Link>
               <NavLink href="#contact" isActive={activeSection === 'contact'}>Contact</NavLink>
               <a 
                 href="/Anwesha_Mishra_Resume.pdf" 
@@ -72,7 +76,13 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
             <MobileNavLink href="#about" onClick={toggleMenu}>About</MobileNavLink>
             <MobileNavLink href="#education" onClick={toggleMenu}>Education</MobileNavLink>
             <MobileNavLink href="#skills" onClick={toggleMenu}>Skills</MobileNavLink>
-            <MobileNavLink href="#projects" onClick={toggleMenu}>Projects</MobileNavLink>
+            <Link 
+              to="/projects"
+              className="text-gray-300 hover:text-neon-blue block px-3 py-2 rounded-md text-base font-medium"
+              onClick={toggleMenu}
+            >
+              Projects
+            </Link>
             <MobileNavLink href="#contact" onClick={toggleMenu}>Contact</MobileNavLink>
             <div className="py-2 px-3">
               <a 

@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { ArrowRight, Link as LinkIcon, ExternalLink, Code, Eye, Tag, Calendar, Github, Clock, Award, Star, ChevronRight, Zap, Layers, Check } from 'lucide-react';
+import { ArrowRight, Link as LinkIcon, ExternalLink, Code, Eye, Tag, Calendar, Github, Clock, Award, Star, ChevronRight, Zap, Layers, Check, ArrowLeft } from 'lucide-react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { 
   Dialog, 
@@ -366,22 +365,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                   </div>
                 </div>
                 
-                {/* Additional Screenshots */}
+                {/* Single Project Screenshot - Changed from multiple to single */}
                 <div className="bg-[#12123e]/30 rounded-xl p-4 border border-white/5">
-                  <h3 className="text-neon-purple font-medium mb-4">Project Screenshots</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {Array(3).fill(0).map((_, i) => (
-                      <div key={i} className="rounded-md overflow-hidden relative group cursor-pointer">
-                        <img 
-                          src={`https://images.unsplash.com/photo-148859052${i * 10 + 8505}-98d2b5aba04b?w=500&auto=format`} 
-                          alt={`Screenshot ${i+1}`} 
-                          className="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
-                          <span className="p-2 text-white text-xs">Screenshot {i+1}</span>
-                        </div>
-                      </div>
-                    ))}
+                  <h3 className="text-neon-purple font-medium mb-4">Project Screenshot</h3>
+                  <div className="overflow-hidden rounded-md">
+                    <img 
+                      src={`https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&auto=format`} 
+                      alt={`Full project screenshot`} 
+                      className="w-full object-cover transition-transform duration-300 hover:scale-105"
+                    />
                   </div>
                 </div>
               </div>

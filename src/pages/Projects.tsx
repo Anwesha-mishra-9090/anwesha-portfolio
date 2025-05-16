@@ -3,17 +3,20 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import SimpleSpaceBackground from '../components/SimpleSpaceBackground';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Search, Code, Link as LinkIcon, ArrowRight, Filter, Calendar, BarChart2, Star, X } from 'lucide-react';
+import { Search, Code, Link as LinkIcon, ArrowRight, Filter, Calendar, BarChart2, Star, X, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { projects } from '../data/projectsList';
 import { toast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 type SortOption = 'newest' | 'oldest' | 'nameAsc' | 'nameDesc' | 'difficulty' | 'stars';
 
 const Projects: React.FC = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [category, setCategory] = useState('all');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -23,6 +26,11 @@ const Projects: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const filterRef = useRef<HTMLDivElement>(null);
+  
+  // Handle going back to home
+  const goBack = () => {
+    navigate('/');
+  };
   
   // Handle click outside filter panel
   useEffect(() => {
@@ -119,16 +127,29 @@ const Projects: React.FC = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="flex justify-between items-center mb-4"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-center mb-4">
+            {/* Back Button */}
+            <Button 
+              variant="outline" 
+              className="border-neon-blue text-neon-blue hover:bg-neon-blue/10 transition-all flex items-center gap-2"
+              onClick={goBack}
+            >
+              <ArrowLeft size={16} />
+              Back to Home
+            </Button>
+            
+            <h1 className="text-4xl md:text-5xl font-bold text-center">
               <span className="text-white">My </span>
               <span className="text-neon-blue">Projects</span>
             </h1>
             
-            <p className="text-xl text-center text-gray-300 mb-12">
-              Explore my collection of coding projects
-            </p>
+            <div className="w-[105px]"></div> {/* Empty div for layout balance */}
           </motion.div>
+          
+          <p className="text-xl text-center text-gray-300 mb-12">
+            Explore my collection of coding projects
+          </p>
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
