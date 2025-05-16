@@ -14,7 +14,7 @@ type Toast = {
   dismiss: (id?: string | number) => void;
   error: (title: string, description?: string) => void;
   success: (title: string, description?: string) => void;
-  toasts: any[]; // Required by the Toaster component, even if empty
+  toasts: any[]; // Required by the Toaster component
 };
 
 const Toaster = ({ className, ...props }: React.ComponentProps<typeof SonnerToaster>) => {
@@ -86,7 +86,8 @@ function toast({
   }
 }
 
-const useToast = (): Toast => {
+// Single definition of useToast
+function useToast(): Toast {
   return {
     toast,
     dismiss: sonnerToast.dismiss,
@@ -98,6 +99,6 @@ const useToast = (): Toast => {
     },
     toasts: [], // Empty array to satisfy the toaster component
   };
-};
+}
 
 export { Toaster, toast, useToast };
