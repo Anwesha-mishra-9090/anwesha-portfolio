@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import SimpleSpaceBackground from '../components/SimpleSpaceBackground';
 import Navbar from '../components/Navbar';
@@ -400,6 +399,14 @@ const Projects: React.FC = () => {
                       </div>
                     </div>
                     
+                    <Button 
+                      className="w-full mb-3 flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/80"
+                      onClick={() => setIsDialogOpen(false)}
+                    >
+                      <ArrowLeft size={16} />
+                      Back to Projects
+                    </Button>
+                    
                     <a 
                       href={selectedProject.link} 
                       target="_blank" 
@@ -429,15 +436,6 @@ const Projects: React.FC = () => {
                       <span className="px-2 py-1 text-xs bg-neon-pink/10 border border-neon-pink/30 rounded-md">HTML</span>
                       <span className="px-2 py-1 text-xs bg-neon-purple/10 border border-neon-purple/30 rounded-md">CSS</span>
                       <span className="px-2 py-1 text-xs bg-[#1a103d] border border-[#8c52ff]/30 rounded-md">React</span>
-                    </div>
-                    
-                    <div className="flex justify-end">
-                      <button 
-                        onClick={() => setIsDialogOpen(false)}
-                        className="px-4 py-2 text-gray-300 hover:text-white"
-                      >
-                        Close
-                      </button>
                     </div>
                   </div>
                 </div>

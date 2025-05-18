@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface NavbarProps {
@@ -46,9 +45,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
                 </>
               ) : (
                 <Link to="/" className="text-gray-300 hover:text-neon-blue hover:scale-105 px-3 py-2 rounded-md text-sm font-medium transition-all flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                  </svg>
+                  <ArrowLeft size={16} className="mr-1" />
                   Back to Home
                 </Link>
               )}
@@ -104,9 +101,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
                 className="text-gray-300 hover:text-neon-blue block px-3 py-2 rounded-md text-base font-medium flex items-center"
                 onClick={toggleMenu}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
+                <ArrowLeft size={16} className="mr-1" />
                 Back to Home
               </Link>
             )}
