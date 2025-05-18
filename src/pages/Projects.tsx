@@ -1,10 +1,11 @@
+
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import SimpleSpaceBackground from '../components/SimpleSpaceBackground';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Search, Code, Link as LinkIcon, ArrowRight, Filter, Calendar, BarChart2, Star, X, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { projects } from '../data/projectsList';
@@ -361,13 +362,29 @@ const Projects: React.FC = () => {
             )}
           </motion.div>
           
-          {/* Project Details Dialog */}
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogContent className="max-w-3xl bg-[#0f0f2a] border-neon-blue/30">
+          {/* Project Details Dialog - Updated with better navigation */}
+          <Dialog 
+            open={isDialogOpen} 
+            onOpenChange={(open) => {
+              if (!open) setIsDialogOpen(false);
+            }}
+          >
+            <DialogContent 
+              className="max-w-3xl bg-[#0f0f2a] border-neon-blue/30"
+              onEscapeKeyDown={() => setIsDialogOpen(false)}
+              onInteractOutside={() => setIsDialogOpen(false)}
+            >
               <DialogHeader>
-                <DialogTitle>Project Details</DialogTitle>
+                <DialogTitle className="flex justify-between items-center">
+                  <span>Project Details</span>
+                  <DialogClose className="h-6 w-6 rounded-full hover:bg-gray-700/50 inline-flex items-center justify-center">
+                    <X className="h-4 w-4" />
+                    <span className="sr-only">Close</span>
+                  </DialogClose>
+                </DialogTitle>
                 <DialogDescription>View detailed information about the project</DialogDescription>
               </DialogHeader>
+              
               {selectedProject && (
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
@@ -440,6 +457,18 @@ const Projects: React.FC = () => {
                   </div>
                 </div>
               )}
+              
+              {/* Extra back button at the bottom of dialog for better UX */}
+              <div className="flex justify-center mt-4">
+                <Button 
+                  variant="outline" 
+                  className="border-neon-blue text-neon-blue hover:bg-neon-blue/10"
+                  onClick={() => setIsDialogOpen(false)}
+                >
+                  <ArrowLeft size={16} className="mr-2" />
+                  Close Details
+                </Button>
+              </div>
             </DialogContent>
           </Dialog>
         </div>

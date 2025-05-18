@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Menu, X, ArrowLeft } from 'lucide-react';
+import { Menu, X, ArrowLeft, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface NavbarProps {
@@ -12,6 +13,8 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const isProjectsPage = activeSection === 'projects';
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#0a0a20]/80 backdrop-blur-md border-b border-[#8c52ff]/30">
@@ -31,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
           {/* Desktop nav */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8">
-              {activeSection !== 'projects' ? (
+              {!isProjectsPage ? (
                 <>
                   <NavLink href="#home" isActive={activeSection === 'hero'}>Home</NavLink>
                   <NavLink href="#about" isActive={activeSection === 'about'}>About</NavLink>
@@ -44,8 +47,12 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
                   <NavLink href="#contact" isActive={activeSection === 'contact'}>Contact</NavLink>
                 </>
               ) : (
-                <Link to="/" className="text-gray-300 hover:text-neon-blue hover:scale-105 px-3 py-2 rounded-md text-sm font-medium transition-all flex items-center">
-                  <ArrowLeft size={16} className="mr-1" />
+                <Link 
+                  to="/" 
+                  className="text-gray-300 hover:text-neon-blue hover:scale-105 px-3 py-2 rounded-md text-sm font-medium transition-all flex items-center"
+                  aria-label="Back to home page"
+                >
+                  <Home size={16} className="mr-1" />
                   Back to Home
                 </Link>
               )}
@@ -65,6 +72,8 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
             <button
               onClick={toggleMenu}
               className="p-2 rounded-md text-gray-400 hover:text-white focus:outline-none"
+              aria-expanded={isMenuOpen}
+              aria-label="Toggle menu"
             >
               {isMenuOpen ? (
                 <X className="h-6 w-6 text-neon-pink" />
@@ -77,48 +86,51 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
       </div>
       
       {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-[#0a0a20]/95 backdrop-blur-md">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {activeSection !== 'projects' ? (
-              <>
-                <MobileNavLink href="#home" onClick={toggleMenu}>Home</MobileNavLink>
-                <MobileNavLink href="#about" onClick={toggleMenu}>About</MobileNavLink>
-                <MobileNavLink href="#education" onClick={toggleMenu}>Education</MobileNavLink>
-                <MobileNavLink href="#skills" onClick={toggleMenu}>Skills</MobileNavLink>
+      <AnimatePresence>
+        {isMenuOpen && (
+          <div className="md:hidden bg-[#0a0a20]/95 backdrop-blur-md">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              {!isProjectsPage ? (
+                <>
+                  <MobileNavLink href="#home" onClick={toggleMenu}>Home</MobileNavLink>
+                  <MobileNavLink href="#about" onClick={toggleMenu}>About</MobileNavLink>
+                  <MobileNavLink href="#education" onClick={toggleMenu}>Education</MobileNavLink>
+                  <MobileNavLink href="#skills" onClick={toggleMenu}>Skills</MobileNavLink>
+                  <Link 
+                    to="/projects"
+                    className="text-gray-300 hover:text-neon-blue block px-3 py-2 rounded-md text-base font-medium"
+                    onClick={toggleMenu}
+                  >
+                    Projects
+                  </Link>
+                  <MobileNavLink href="#contact" onClick={toggleMenu}>Contact</MobileNavLink>
+                </>
+              ) : (
                 <Link 
-                  to="/projects"
-                  className="text-gray-300 hover:text-neon-blue block px-3 py-2 rounded-md text-base font-medium"
+                  to="/"
+                  className="text-gray-300 hover:text-neon-blue block px-3 py-2 rounded-md text-base font-medium flex items-center"
+                  onClick={toggleMenu}
+                  aria-label="Back to home page"
+                >
+                  <Home size={16} className="mr-1" />
+                  Back to Home
+                </Link>
+              )}
+              <div className="py-2 px-3">
+                <a 
+                  href="/Anwesha_Mishra_Resume.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="neon-button w-full block text-center"
                   onClick={toggleMenu}
                 >
-                  Projects
-                </Link>
-                <MobileNavLink href="#contact" onClick={toggleMenu}>Contact</MobileNavLink>
-              </>
-            ) : (
-              <Link 
-                to="/"
-                className="text-gray-300 hover:text-neon-blue block px-3 py-2 rounded-md text-base font-medium flex items-center"
-                onClick={toggleMenu}
-              >
-                <ArrowLeft size={16} className="mr-1" />
-                Back to Home
-              </Link>
-            )}
-            <div className="py-2 px-3">
-              <a 
-                href="/Anwesha_Mishra_Resume.pdf" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="neon-button w-full block text-center"
-                onClick={toggleMenu}
-              >
-                Resume
-              </a>
+                  Resume
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
