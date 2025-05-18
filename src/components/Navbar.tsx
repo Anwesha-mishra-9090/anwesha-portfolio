@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ArrowLeft, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface NavbarProps {
   activeSection: string;
@@ -88,7 +89,13 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
       {/* Mobile menu */}
       <AnimatePresence>
         {isMenuOpen && (
-          <div className="md:hidden bg-[#0a0a20]/95 backdrop-blur-md">
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-[#0a0a20]/95 backdrop-blur-md"
+          >
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {!isProjectsPage ? (
                 <>
@@ -128,7 +135,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </nav>
