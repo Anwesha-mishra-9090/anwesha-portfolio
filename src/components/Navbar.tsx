@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -32,15 +32,26 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
           {/* Desktop nav */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8">
-              <NavLink href="#home" isActive={activeSection === 'hero'}>Home</NavLink>
-              <NavLink href="#about" isActive={activeSection === 'about'}>About</NavLink>
-              <NavLink href="#education" isActive={activeSection === 'education'}>Education</NavLink>
-              <NavLink href="#skills" isActive={activeSection === 'skills'}>Skills</NavLink>
-              <Link to="/projects" className={`text-gray-300 hover:text-neon-blue hover:scale-105 px-3 py-2 rounded-md text-sm font-medium transition-all relative group ${activeSection === 'projects' ? 'text-neon-blue' : ''}`}>
-                Projects
-                <span className={`absolute bottom-0 left-0 h-[2px] bg-neon-blue transition-all duration-300 ${activeSection === 'projects' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
-              </Link>
-              <NavLink href="#contact" isActive={activeSection === 'contact'}>Contact</NavLink>
+              {activeSection !== 'projects' ? (
+                <>
+                  <NavLink href="#home" isActive={activeSection === 'hero'}>Home</NavLink>
+                  <NavLink href="#about" isActive={activeSection === 'about'}>About</NavLink>
+                  <NavLink href="#education" isActive={activeSection === 'education'}>Education</NavLink>
+                  <NavLink href="#skills" isActive={activeSection === 'skills'}>Skills</NavLink>
+                  <Link to="/projects" className={`text-gray-300 hover:text-neon-blue hover:scale-105 px-3 py-2 rounded-md text-sm font-medium transition-all relative group ${activeSection === 'projects' ? 'text-neon-blue' : ''}`}>
+                    Projects
+                    <span className={`absolute bottom-0 left-0 h-[2px] bg-neon-blue transition-all duration-300 ${activeSection === 'projects' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+                  </Link>
+                  <NavLink href="#contact" isActive={activeSection === 'contact'}>Contact</NavLink>
+                </>
+              ) : (
+                <Link to="/" className="text-gray-300 hover:text-neon-blue hover:scale-105 px-3 py-2 rounded-md text-sm font-medium transition-all flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                  Back to Home
+                </Link>
+              )}
               <a 
                 href="/Anwesha_Mishra_Resume.pdf" 
                 target="_blank" 
@@ -72,18 +83,33 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
       {isMenuOpen && (
         <div className="md:hidden bg-[#0a0a20]/95 backdrop-blur-md">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <MobileNavLink href="#home" onClick={toggleMenu}>Home</MobileNavLink>
-            <MobileNavLink href="#about" onClick={toggleMenu}>About</MobileNavLink>
-            <MobileNavLink href="#education" onClick={toggleMenu}>Education</MobileNavLink>
-            <MobileNavLink href="#skills" onClick={toggleMenu}>Skills</MobileNavLink>
-            <Link 
-              to="/projects"
-              className="text-gray-300 hover:text-neon-blue block px-3 py-2 rounded-md text-base font-medium"
-              onClick={toggleMenu}
-            >
-              Projects
-            </Link>
-            <MobileNavLink href="#contact" onClick={toggleMenu}>Contact</MobileNavLink>
+            {activeSection !== 'projects' ? (
+              <>
+                <MobileNavLink href="#home" onClick={toggleMenu}>Home</MobileNavLink>
+                <MobileNavLink href="#about" onClick={toggleMenu}>About</MobileNavLink>
+                <MobileNavLink href="#education" onClick={toggleMenu}>Education</MobileNavLink>
+                <MobileNavLink href="#skills" onClick={toggleMenu}>Skills</MobileNavLink>
+                <Link 
+                  to="/projects"
+                  className="text-gray-300 hover:text-neon-blue block px-3 py-2 rounded-md text-base font-medium"
+                  onClick={toggleMenu}
+                >
+                  Projects
+                </Link>
+                <MobileNavLink href="#contact" onClick={toggleMenu}>Contact</MobileNavLink>
+              </>
+            ) : (
+              <Link 
+                to="/"
+                className="text-gray-300 hover:text-neon-blue block px-3 py-2 rounded-md text-base font-medium flex items-center"
+                onClick={toggleMenu}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Home
+              </Link>
+            )}
             <div className="py-2 px-3">
               <a 
                 href="/Anwesha_Mishra_Resume.pdf" 
